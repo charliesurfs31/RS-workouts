@@ -29,8 +29,30 @@ function displayWorkout() {
         card.classList.add('workout');
         card.textContent = `${myWorkout[i].name} | ${myWorkout[i].muscle} | ${myWorkout[i].reps} reps`;
         exerciseList.appendChild(card);
-    }
-}
+
+        const toggleButton = document.createElement('button');
+        toggleButton.dataset.id = myWorkout[i].id;
+        card.appendChild(toggleButton).addEventListener('click', function() {
+            const exercise = myWorkout.find(function(ex) {
+                return ex.id === toggleButton.dataset.id;
+            });
+            exercise.toggleCompleted();
+            displayWorkout();
+        })
+        toggleButton.textContent = myWorkout[i].completed ? 'Workout Completed' : 'Complete Workout';
+        card.style.backgroundColor = myWorkout[i].completed ? 'green' : 'lightgray';
+
+        const removeButton = document.createElement('button');
+        removeButton.dataset.id = myWorkout[i].id;
+        removeButton.textContent = 'Remove';
+        card.appendChild(removeButton).addEventListener('click', function() {
+            const index = myWorkout.findIndex(function(ex) {
+                return ex.id === removeButton.dataset.id;
+            });
+            myWorkout.splice(index, 1);
+            displayWorkout();
+        });
+}}
 
 document.getElementById('add-exercise-btn').addEventListener('click', function() {
     document.getElementById('add-exercise-dialog').showModal();
@@ -48,6 +70,7 @@ document.getElementById('add-exercise-form').addEventListener('submit', function
     addExerciseToWorkout(name, muscle, reps);
     document.getElementById('add-exercise-dialog').close();
     displayWorkout();
+    document.getElementById('add-exercise-form').reset();
 })
 
 addExerciseToWorkout("Road Strength", "Full Body", 10);
