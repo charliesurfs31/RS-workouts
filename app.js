@@ -8,7 +8,12 @@ function Exercise(name, muscle, reps) {
   this.name = name;
   this.muscle = muscle;
   this.reps = reps;
+  this.completed = false;
 }
+
+Exercise.prototype.toggleCompleted = function() {
+    this.completed = !this.completed;
+};
 
 function addExerciseToWorkout(name, muscle, reps) {
     const exercise = new Exercise(name, muscle, reps);
@@ -27,6 +32,24 @@ function displayWorkout() {
     }
 }
 
+document.getElementById('add-exercise-btn').addEventListener('click', function() {
+    document.getElementById('add-exercise-dialog').showModal();
+})
+
+document.getElementById('cancel-btn').addEventListener('click', function() {
+    document.getElementById('add-exercise-dialog').close();
+})
+
+document.getElementById('add-exercise-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const name = document.getElementById('exercise-name').value;
+    const muscle = document.getElementById('exercise-muscle').value;
+    const reps = parseInt(document.getElementById('exercise-reps').value);
+    addExerciseToWorkout(name, muscle, reps);
+    document.getElementById('add-exercise-dialog').close();
+    displayWorkout();
+})
+
 addExerciseToWorkout("Road Strength", "Full Body", 10);
 addExerciseToWorkout("Road Power", "Full Body", 8);
 addExerciseToWorkout("MTB Strength", "Full Body", 10);
@@ -34,3 +57,4 @@ addExerciseToWorkout("MTB Power", "Full Body", 8);
 addExerciseToWorkout("Gravel Strength", "Full Body", 10);
 addExerciseToWorkout("Gravel Power", "Full Body", 8);
 displayWorkout();
+

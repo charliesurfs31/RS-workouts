@@ -6,7 +6,7 @@ h1 {
 #exercise-list {
     display: grid;
     grid-template-columns: 300px 300px 300px;
-    grid-template-rows: 200px 200px;
+    grid-auto-rows: 200px;
     gap: 20px;
     justify-content: center;
 }
@@ -16,4 +16,12 @@ h1 {
     border-radius: 15px;
     text-align: center;
     padding-top: 25px;
+}
+
+#add-exercise-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
 }
